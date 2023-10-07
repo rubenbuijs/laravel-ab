@@ -45,7 +45,8 @@ class LaravelSession implements SessionInterface {
     public function put($name, $value)
     {
         $this->data[$name] = $value;
-        
+        echo $this->sessionName;
+        dd($this->data);
         if (!Session::put($this->sessionName, $this->data)) {
             Log::error("Failed to set session data for {$this->sessionName}.");
             throw new Exception("Failed to set session data");
