@@ -50,7 +50,7 @@ class InstallCommand extends Command {
             Schema::connection($connection)->create('experiments', function($table)
             {
                 $table->id();
-                $table->string('name');
+                $table->string('name')->unique();
                 $table->integer('visitors')->unsigned()->default(0);
                 $table->integer('engagement')->unsigned()->default(0);
             });
@@ -62,7 +62,7 @@ class InstallCommand extends Command {
             Schema::connection($connection)->create('goals', function($table)
             {
                 $table->id();
-                $table->string('name');
+                $table->string('name')->unique();
                 $table->string('experiment');
                 $table->integer('count')->unsigned()->default(0);
                 $table->primary(array('name', 'experiment'));
