@@ -22,7 +22,7 @@ interface SessionInterface {
      *
      * @api
      */
-    public function set($name, $value);
+    public function put($name, $value);
 
     /**
      * Clears all attributes.
