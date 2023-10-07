@@ -44,7 +44,7 @@ class CookieSession implements SessionInterface {
     /**
      * {@inheritdoc}
      */
-    public function set($name, $value)
+    public function put($name, $value)
     {
         $this->data[$name] = $value;
 
