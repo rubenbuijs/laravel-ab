@@ -35,9 +35,7 @@ class TesterServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->app->singleton('ab', function($app) {
-            return new Tester(new LaravelSession);
-        });
+    
 
 
         $this->registerCommands();
