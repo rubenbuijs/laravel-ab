@@ -65,7 +65,6 @@ class InstallCommand extends Command {
                 $table->string('name')->unique();
                 $table->string('experiment');
                 $table->integer('count')->unsigned()->default(0);
-                $table->primary(array('name', 'experiment'));
             });
         }
 
