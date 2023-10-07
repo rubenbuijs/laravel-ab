@@ -1,6 +1,8 @@
 <?php namespace Jenssegers\AB\Session;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Exception;
 
 class LaravelSession implements SessionInterface {
 
@@ -16,14 +18,14 @@ class LaravelSession implements SessionInterface {
      *
      * @var array
      */
-    protected $data = null;
+    protected $data;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->data = Session::get($this->sessionName, []);
+        $this->data = Session::get($this->sessionName, []) ?? [];
     }
 
     /**
@@ -31,6 +33,9 @@ class LaravelSession implements SessionInterface {
      */
     public function get($name, $default = null)
     {
+        if (!isset($this->data[$name])) {
+            Log::warning("Session key {$name} not found.");
+        }
         return $this->data[$name] ?? $default;
     }
 
@@ -40,8 +45,13 @@ class LaravelSession implements SessionInterface {
     public function put($name, $value)
     {
         $this->data[$name] = $value;
+        
+        if (!Session::put($this->sessionName, $this->data)) {
+            Log::error("Failed to set session data for {$this->sessionName}.");
+            throw new Exception("Failed to set session data");
+        }
 
-        return Session::put($this->sessionName, $this->data);
+        return true;
     }
 
     /**
@@ -50,8 +60,12 @@ class LaravelSession implements SessionInterface {
     public function clear()
     {
         $this->data = [];
+        
+        if (!Session::forget($this->sessionName)) {
+            Log::error("Failed to clear session data for {$this->sessionName}.");
+            throw new Exception("Failed to clear session data");
+        }
 
-        return Session::forget($this->sessionName);
+        return true;
     }
-
 }
