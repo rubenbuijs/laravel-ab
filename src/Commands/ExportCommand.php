@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Illuminate\Support\Arr;
+
 
 class ExportCommand extends Command {
 
@@ -44,7 +46,7 @@ class ExportCommand extends Command {
     public function handle()
     {
         $experiments = Experiment::active()->get();
-        $goals = array_unique(Goal::active()->orderBy('name')->lists('name'));
+        $goals = Goal::active()->orderBy('name')->pluck('name')->unique()->toArray();
 
         $columns = array_merge(['Experiment', 'Visitors', 'Engagement'], array_map('ucfirst', $goals));
 
@@ -61,11 +63,11 @@ class ExportCommand extends Command {
                 number_format($engagement, 2) . " % (" . $experiment->engagement .")",
             ];
 
-            $results = $experiment->goals()->lists('count', 'name');
+            $results = $experiment->goals()->pluck('count', 'name')->toArray();
 
             foreach ($goals as $column)
             {
-                $count = array_get($results, $column, 0);
+                $count = Arr::get($results, $column, 0);
                 $percentage = $experiment->visitors ? ($count / $experiment->visitors * 100) : 0;
 
                 $row[] = number_format($percentage, 2) . " % ($count)";
