@@ -40,7 +40,7 @@ class InstallCommand extends Command {
      *
      * @return mixed
      */
-    public function fire()
+    public function handle()
     {
         $connection = Config::get('ab::connection');
 
