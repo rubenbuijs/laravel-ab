@@ -13,11 +13,11 @@ use Symfony\Component\Console\Input\InputArgument;
 class ExportCommand extends Command {
 
     /**
-     * The console command name.
+     * The name and signature of the console command.
      *
      * @var string
      */
-    protected $name = 'ab:export';
+    protected $signature = 'ab:export {file? : The target CSV file to write the output to}';
 
     /**
      * The console command description.
@@ -87,27 +87,4 @@ class ExportCommand extends Command {
             $this->line($output);
         }
     }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return array(
-            array('file', InputArgument::OPTIONAL, 'The target CSV file to write the output to.')
-        );
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return array();
-    }
-
 }
