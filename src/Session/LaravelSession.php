@@ -33,9 +33,6 @@ class LaravelSession implements SessionInterface {
      */
     public function get($name, $default = null)
     {
-        if (!isset($this->data[$name])) {
-            Log::warning("Session key {$name} not found.");
-        }
         return $this->data[$name] ?? $default;
     }
 
