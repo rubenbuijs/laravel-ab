@@ -30,7 +30,7 @@ class CookieSession implements SessionInterface {
      */
     public function __construct()
     {
-        $this->data = Cookie::get($this->cookieName, []);
+        $this->data = json_decode(Cookie::get($this->cookieName, '[]'), true);
     }
 
     /**
@@ -48,7 +48,7 @@ class CookieSession implements SessionInterface {
     {
         $this->data[$name] = $value;
 
-        return Cookie::queue($this->cookieName, $this->data, $this->minutes);
+        return Cookie::queue($this->cookieName, json_encode($this->data), $this->minutes);
     }
 
     /**
