@@ -42,7 +42,7 @@ class FlushCommand extends Command {
      */
     public function fire()
     {
-        $connection = Config::get('ab::connection');
+        $connection = Config::get('ab.connection');
 
         DB::connection($connection)->table('experiments')->delete();
         DB::connection($connection)->table('goals')->delete();
