@@ -5,8 +5,6 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Goal extends Eloquent {
 
-    protected $primaryKey = 'name';
-
     public $timestamps = false;
 
     protected $fillable = ['name', 'experiment', 'count'];
