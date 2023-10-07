@@ -25,13 +25,6 @@ class TesterServiceProvider extends ServiceProvider {
         $this->publishes([
             __DIR__.'/path/to/config/ab.php' => config_path('ab.php'),
         ], 'config');
-    
-        // Start the A/B tracking when routing starts.
-        $this->app->booted(function () {
-            $this->app->make('router')->before(function ($request) {
-                $this->app['ab']->track($request);
-            });
-        });
     }
 
 
