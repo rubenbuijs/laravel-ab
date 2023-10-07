@@ -31,7 +31,7 @@ class LaravelSession implements SessionInterface {
      */
     public function get($name, $default = null)
     {
-        return array_get($this->data, $name, $default);
+        return $this->data[$name] ?? $default;
     }
 
     /**
@@ -41,7 +41,7 @@ class LaravelSession implements SessionInterface {
     {
         $this->data[$name] = $value;
 
-        return Session::set($this->sessionName, $this->data);
+        return Session::put($this->sessionName, $this->data);
     }
 
     /**
