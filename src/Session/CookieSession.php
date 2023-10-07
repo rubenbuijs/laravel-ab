@@ -38,7 +38,7 @@ class CookieSession implements SessionInterface {
      */
     public function get($name, $default = null)
     {
-        return array_get($this->data, $name, $default);
+        return $this->data[$name] ?? $default;
     }
 
     /**
