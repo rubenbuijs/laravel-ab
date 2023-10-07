@@ -41,7 +41,7 @@ class ExportCommand extends Command {
      *
      * @return mixed
      */
-    public function fire()
+    public function handle()
     {
         $experiments = Experiment::active()->get();
         $goals = array_unique(Goal::active()->orderBy('name')->lists('name'));
