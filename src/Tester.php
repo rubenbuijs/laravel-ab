@@ -103,7 +103,7 @@ class Tester {
         $experiment->save();
 
         // Mark current experiment as interacted.
-        $this->session->set('pageview', 1);
+        $this->session->put('pageview', 1);
     }
 
     /**
@@ -121,7 +121,7 @@ class Tester {
         $experiment->save();
 
         // Mark current experiment as interacted.
-        $this->session->set('interacted', 1);
+        $this->session->put('interacted', 1);
     }
 
     /**
@@ -138,7 +138,7 @@ class Tester {
         Goal::where('name', $name)->where('experiment', $this->experiment())->update(['count' => ($goal->count + 1)]);
 
         // Mark current experiment as completed.
-        $this->session->set("completed_$name", 1);
+        $this->session->put("completed_$name", 1);
     }
 
     /**
@@ -150,7 +150,7 @@ class Tester {
     {
         if ($this->session->get('experiment') != $experiment)
         {
-            $this->session->set('experiment', $experiment);
+            $this->session->put('experiment', $experiment);
 
             // Increase pageviews for new experiment.
             $this->nextExperiment($experiment);
@@ -216,7 +216,7 @@ class Tester {
             $experiment = Experiment::active()->orderBy('visitors', 'asc')->firstOrFail();
         }
 
-        $this->session->set('experiment', $experiment->name);
+        $this->session->put('experiment', $experiment->name);
 
         // Since there is an ongoing experiment, increase the pageviews.
         // This will only be incremented once during the whole experiment.
