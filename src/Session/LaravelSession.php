@@ -45,13 +45,7 @@ class LaravelSession implements SessionInterface {
     public function put($name, $value)
     {
         $this->data[$name] = $value;
-        echo $this->sessionName;
-        dd($this->data);
-        if (!Session::put($this->sessionName, $this->data)) {
-            Log::error("Failed to set session data for {$this->sessionName}.");
-            throw new Exception("Failed to set session data");
-        }
-
+        Session::put($this->sessionName, $this->data);
         return true;
     }
 
@@ -62,11 +56,7 @@ class LaravelSession implements SessionInterface {
     {
         $this->data = [];
         
-        if (!Session::forget($this->sessionName)) {
-            Log::error("Failed to clear session data for {$this->sessionName}.");
-            throw new Exception("Failed to clear session data");
-        }
-
+        Session::forget($this->sessionName);
         return true;
     }
 }
