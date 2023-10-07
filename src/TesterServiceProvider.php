@@ -21,15 +21,19 @@ class TesterServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        // Fix for PSR-4
-        $this->package('rubenbuijs/laravel-ab', 'ab', realpath(__DIR__));
-
+        // Config
+        $this->publishes([
+            __DIR__.'/path/to/config/ab.php' => config_path('ab.php'),
+        ], 'config');
+    
         // Start the A/B tracking when routing starts.
-        $this->app->before(function($request)
-        {
-            $this->app['ab']->track($request);
+        $this->app->booted(function () {
+            $this->app->make('router')->before(function ($request) {
+                $this->app['ab']->track($request);
+            });
         });
     }
+
 
     /**
      * Register the service provider.
