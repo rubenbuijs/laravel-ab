@@ -25,21 +25,13 @@ class LaravelSession implements SessionInterface {
     public function __construct()
     {
         $this->data = Session::get($this->sessionName, []) ?? [];
-        Log::info('LaravelSession initialized.');
     }
 
     /**
      * {@inheritdoc}
      */
     public function get($name, $default = null)
-    {Log::debug('All Session Data:', Session::all());
-
-        if (!isset($this->data[$name])) {
-            Log::warning("Session key {$name} not found.");
-        } else {
-            Log::info("Getting session key {$name}.");
-        }
-
+    {
         return $this->data[$name] ?? $default;
     }
 
@@ -50,7 +42,6 @@ class LaravelSession implements SessionInterface {
     {
         $this->data[$name] = $value;
         Session::put($this->sessionName, $this->data);
-        Log::info("Set session key {$name} with value {$value}.");
 
         return true;
     }
@@ -62,7 +53,6 @@ class LaravelSession implements SessionInterface {
     {
         $this->data = [];
         Session::forget($this->sessionName);
-        Log::info("Cleared all keys from session {$this->sessionName}.");
 
         return true;
     }
@@ -73,6 +63,5 @@ class LaravelSession implements SessionInterface {
     public function sync()
     {
         Session::put($this->sessionName, $this->data);
-        Log::info("Synced session data.");
     }
 }
