@@ -62,7 +62,7 @@ class InstallCommand extends Command {
             Schema::connection($connection)->create('goals', function($table)
             {
                 $table->id();
-                $table->string('name')->unique();
+                $table->string('name');
                 $table->string('experiment');
                 $table->integer('count')->unsigned()->default(0);
             });
